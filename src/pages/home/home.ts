@@ -23,7 +23,7 @@ export class HomePage {
     });
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.loadItems();
   }
 
@@ -34,20 +34,18 @@ export class HomePage {
         error => this.errorMessage = <any>error);
   }
 
-  removeItem(item, index) {
-    console.log("Removing Item - ", item, index);
+  removeItem(item) {
     const toast = this.toastCtrl.create({
-      message: 'Removing Item - ' + index + " ...",
+      message: 'Removing Item - ' + item.name + " ...",
       duration: 3000
     });
     toast.present();
-    this.dataService.removeItem(index);
+    this.dataService.removeItem(item._id);
   }
 
-  shareItem(item, index) {
-    console.log("Sharing Item - ", item, index);
+  shareItem(item) {
     const toast = this.toastCtrl.create({
-      message: 'Sharing Item - ' + index + " ...",
+      message: 'Sharing Item - ' + item.name + " ...",
       duration: 3000
     });
     toast.present();
@@ -65,15 +63,13 @@ export class HomePage {
   }
 
 
-  editItem(item, index) {
-    console.log("Edit Item - ", item, index);
+  editItem(item) {
     const toast = this.toastCtrl.create({
-      message: 'Editing Item - ' + index + " ...",
+      message: "Editing item - " + item.name + " ...",
       duration: 3000
     });
     toast.present();
-    this.inputDialogService.showPrompt(item, index);
-
+    this.inputDialogService.showPrompt(item);
   }
 
   addItem() {

@@ -14,43 +14,49 @@ export class InputDialogServiceProvider {
     console.log('Hello InputDialogServiceProvider Provider');
   }
 
-  showPrompt(item?, index?) {
-    const prompt = this.alertCtrl.create({
+  showPrompt(item?) {
+    let alert = this.alertCtrl.create({
       title: item ? 'Edit Item' : 'Add Item',
-      message: item? "Please edit item...": "Please enter item...",
+      message: item ? 'Please edit item...' : 'Please enter item',
       inputs: [
         {
           name: 'name',
           placeholder: 'Name',
-          value: item ? item.name : null
+          value: item? item.name : null
         },
         {
           name: 'quantity',
-          placeholder: 'Quanitity',
-          value: item ? item.quantity : null
-        },
+          placeholder: 'Quantity',
+          value: item? item.quantity : null,
+          type: "number"
+        }
       ],
       buttons: [
         {
           text: 'Cancel',
+          role: 'cancel',
           handler: data => {
             console.log('Cancel clicked');
           }
-        },
+        }, 
         {
           text: 'Save',
-          handler: item => {
-            console.log('Saved clicked', item);
-            if (index !== undefined) {
-              this.dataService.editItem(item, index);
-            }
-            else {
-              this.dataService.addItem(item);
+          handler: data => {
+            if (item !== undefined) {
+              this.dataService.editItem(data, item._id);
+            } else {
+              this.dataService.addItem(data);
             }
           }
         }
       ]
     });
-    prompt.present();
+    alert.present();
   }
+
+
+
+
+
+
 }
